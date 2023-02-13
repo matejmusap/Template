@@ -1,16 +1,24 @@
 import { Document, model, Schema } from "mongoose";
 
+enum Role {
+  Admin= "Admin",
+  Editor="Editor",
+  Guest="Guest"
+}
+
 /**
  * Type to model the User Schema for TypeScript.
  * @param email:string
  * @param password:string
  * @param avatar:string
+ * @param avatar:role
  */
 
 export type TUser = {
   email: string;
   password: string;
   avatar: string;
+  role: Role
 };
 
 /**
@@ -34,7 +42,20 @@ const userSchema: Schema = new Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  role: {
+    type: String,
+    enum: ['Admin', 'Editor', 'Guest'],
+    required: true,
+  },
+  fullName: {
+    type: String,
+    required: false,
+  },
+  alias: {
+    type: String,
+    required: false,
+  },
 });
 
 /**
